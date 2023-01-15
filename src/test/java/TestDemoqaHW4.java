@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 
@@ -13,24 +14,30 @@ public class TestDemoqaHW4 {
     @Test
     void testDemoqa(){
         Configuration.browserSize = "1920x1080";
+        Configuration.baseUrl = "https://demoqa.com";
         File file = new File("src/test/resources/readme.txt");
+        String firstName = "Julia";
+        String lastName = "Shkreba";
+        String userEmail = "julyshk@gmail.com";
+        String userNumber = "9991112222";
 
         //открыть https://demoqa.com/automation-practice-form
-        open("https://demoqa.com/automation-practice-form");
+        open("/automation-practice-form");
         //ввести имя в поле First Name
-        $("#firstName").setValue("Julia");
+        $("#firstName").setValue(firstName);
         //ввести фамилию в поле Last Name
-        $("#lastName").setValue("Shkreba");
+        $("#lastName").setValue(lastName);
         //ввести email в поле Email
-        $("#userEmail").setValue("julyshk@gmail.com");
+        $("#userEmail").setValue(userEmail);
         //выбрать femail
         $("#genterWrapper").$(byText("Female")).click();
         //ввести номер телефона в поле Mobile
-        $("#userNumber").setValue("1234567890");
+        $("#userNumber").setValue(userNumber);
         //ввести дату рождения в поле Date of Birth
-        ////$("#dateOfBirthInput").click();
-       // $("#dateOfBirthInput").setValue("");
-       // $("#dateOfBirthInput").setValue("13 Mar 1992");
+        $("#dateOfBirthInput").click();
+        $(".react-datepicker__month-select").selectOption("March");
+        $(".react-datepicker__year-select").selectOption("1992");
+        $(".react-datepicker__day--013").click();
         //заполнить поле Subjects
        $("#subjectsInput").setValue("biology").pressEnter();
        //Выбрать Hobbies
@@ -48,12 +55,9 @@ public class TestDemoqaHW4 {
         executeJavaScript("$('footer').remove()");
         //Нажать кнопку Submit
         $("#submit").click();
-
         //Проверки
-        //$(".table-responsive").shouldHave(text("Build like the best"));
-        $(".table-responsive table tbody tr").$(byText("Student Name")).shouldHave(text("Julia Shkreba"));
-
-        sleep(2000);
-
+        $(".table-responsive").shouldHave(text(firstName), text(lastName), text(userEmail),
+                text("Female"), text(userNumber), text ("13 March,1992"), text("Biology"), text("Reading"), text("Novosibirsk, Krashyi prospect"),
+                text("Haryana"), text("Karnal"), text("readme.txt"));
     }
 }
