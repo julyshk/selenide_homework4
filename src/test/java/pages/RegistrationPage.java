@@ -64,7 +64,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setPhone(String value) {
-        userNumberInput.setValue(value).click();
+        userNumberInput.setValue(String.valueOf(value)).click();
 
         return this;
     }
