@@ -18,11 +18,15 @@ public class TestBaseExtended {
     @BeforeAll
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browser = "chrome";
+        //Configuration.browser = "chrome";
         Configuration.browserVersion = "100.0";
         Configuration.browserSize = "1920x1080";
 
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        //Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        String remoteSelenide = System.getProperty("remote", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
+        String browserName = System.getProperty("browser", "chrome");
+        Configuration.remote = remoteSelenide;
+        Configuration.browser = browserName;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -46,3 +50,6 @@ public class TestBaseExtended {
         Attach.addVideo();
     }
 }
+
+
+//gradle clean remote_test -Dremote_selenide=https://user1:1234@selenoid.autotests.cloud/wd/hub
